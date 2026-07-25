@@ -47,3 +47,9 @@ As this project is in active early development, feedback, suggestions, and contr
 
 * **Issues / Feature Requests:** Please open an issue on GitHub.
 * **Pull Requests:** Feel free to submit PRs for features marked as *In Development*.
+
+---
+
+## 📄 License
+
+This mod is licensed under the [MIT License](LICENSE).
