@@ -4,7 +4,7 @@
 
 ---
 
-> ⚠️ **Project Status: Early Development**  
+> ⚠️ **Project Status: Early Development**
 > Currently, only core object initializations are complete. All features listed below are actively **IN DEVELOPMENT** (WIP) and subject to change.
 
 ---
@@ -21,23 +21,35 @@
 
 ## 🛠️ Status & Progress
 
-| Feature / Component | Status |
-| :--- | :---: |
-| Mod Setup & Object Initialization | ✅ Done |
-| Item & GUI Registration | 🚧 In Development |
-| Custom Book/Contract Screen UI | 🚧 In Development |
+
+| Feature / Component                      |      Status      |
+| :--------------------------------------- | :---------------: |
+| Mod Setup & Object Initialization        |      ✅ Done      |
+| Item & GUI Registration                  | 🚧 In Development |
+| Custom Book/Contract Screen UI           | 🚧 In Development |
 | Checkboxes & Interactive Text Components | 🚧 In Development |
-| Text Formatting & Parsing Engine | 🚧 In Development |
-| NBT Saving & Network Serialization | 🚧 In Development |
+| Text Formatting & Parsing Engine         | 🚧 In Development |
+| NBT Saving & Network Serialization       | 🚧 In Development |
 
 ---
 
 ## 🔧 Requirements & Installation
 
 1. Download and install **Minecraft 1.20.1**.
-2. Install **Fabric Loader** (v0.14+ recommended).
-3. Download and place **Fabric API** into your `.minecraft/mods` folder.
-4. Download the latest release of **Contracts** and place it in your `mods` folder.
+2. Install **Fabric Loader** (v0.19.3+).
+3. Download and place **Fabric API** (any version) into your `.minecraft/mods` folder.
+4. Download and place **Fabric Language Kotlin** (any version) into your `.minecraft/mods` folder.
+5. Download the latest release of **Contracts** and place it in your `mods` folder.
+
+---
+
+## 📚 Guide
+
+> ⚠️ This section will be updated as development progresses. Stay tuned
+
+To get the contract paper you should craft it via a paper and a feather.
+
+![Craft](gallery/Craft.png)
 
 ---
 

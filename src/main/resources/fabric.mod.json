@@ -3,15 +3,14 @@
 	"id": "contract",
 	"version": "${version}",
 	"name": "Contract",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "Mod adding contracts with advanced text editing and interactive elements",
 	"authors": [
-		"Me!"
+		"StrelnikovDmitry"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/StrelnikovDmitry/contract"
 	},
-	"license": "CC0-1.0",
+	"license": "MIT license",
 	"icon": "assets/contract/icon.png",
 	"environment": "*",
 	"entrypoints": {
