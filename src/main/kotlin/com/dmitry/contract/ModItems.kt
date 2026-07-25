@@ -9,7 +9,13 @@ object ModItems {
     val CONTRACT_PAPER: Item = Registry.register(
         Registries.ITEM,
         Contract.id("contract_paper"),
-        Item(FabricItemSettings())
+        Item(FabricItemSettings().maxCount(1))
+    )
+
+    val SIGNED_CONTRACT_PAPER: Item = Registry.register(
+        Registries.ITEM,
+        Contract.id("signed_contract_paper"),
+        Item(FabricItemSettings().maxCount(1))
     )
 
     fun init() {}
