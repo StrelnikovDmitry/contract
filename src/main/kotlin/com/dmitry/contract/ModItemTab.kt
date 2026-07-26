@@ -2,7 +2,6 @@ package com.dmitry.contract
 
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
-import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.Registries
@@ -12,7 +11,7 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.text.Text
 
 object ModItemTab {
-    val REGISTRY_KEY: RegistryKey<ItemGroup> = RegistryKey.of<ItemGroup>(RegistryKeys.ITEM_GROUP, Contract.id("ItemGroup.contract_mod_tab"))
+    val REGISTRY_KEY: RegistryKey<ItemGroup> = RegistryKey.of<ItemGroup>(RegistryKeys.ITEM_GROUP, Contract.id("contract_mod_tab"))
 
     val CONTRACT_CREATIVE_TAB: ItemGroup = Registry.register(
         Registries.ITEM_GROUP,
