@@ -1,0 +1,33 @@
+package com.dmitry.contract
+
+import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
+import net.minecraft.item.Item
+import net.minecraft.item.ItemGroup
+import net.minecraft.item.ItemStack
+import net.minecraft.registry.Registries
+import net.minecraft.registry.Registry
+import net.minecraft.registry.RegistryKey
+import net.minecraft.registry.RegistryKeys
+import net.minecraft.text.Text
+
+object ModItemTab {
+    val REGISTRY_KEY: RegistryKey<ItemGroup> = RegistryKey.of<ItemGroup>(RegistryKeys.ITEM_GROUP, Contract.id("ItemGroup.contract_mod_tab"))
+
+    val CONTRACT_CREATIVE_TAB: ItemGroup = Registry.register(
+        Registries.ITEM_GROUP,
+        REGISTRY_KEY,
+        FabricItemGroup.builder()
+            .icon { ItemStack(ModItems.SIGNED_CONTRACT_PAPER) }
+            .displayName(Text.translatable("contract_mod_tab_display_name"))
+            .build()
+    )
+
+    fun init() {
+        ItemGroupEvents.modifyEntriesEvent(REGISTRY_KEY)
+            .register { entries ->
+                entries.add(ModItems.CONTRACT_PAPER)
+                entries.add(ModItems.SIGNED_CONTRACT_PAPER)
+        }
+    }
+}

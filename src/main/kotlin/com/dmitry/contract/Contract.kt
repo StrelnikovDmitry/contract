@@ -14,6 +14,7 @@ object Contract : ModInitializer {
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
 		ModItems.init()
+		ModItemTab.init()
 		LOGGER.info("Hello Fabric world!")
 	}
 
