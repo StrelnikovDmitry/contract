@@ -6,6 +6,7 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 
 object ModItems {
+    //items
     val CONTRACT_PAPER: Item = Registry.register(
         Registries.ITEM,
         Contract.id("contract_paper"),
@@ -18,5 +19,8 @@ object ModItems {
         Item(FabricItemSettings().maxCount(1))
     )
 
+    //---
+
+    //initializing items
     fun init() {}
 }

@@ -11,8 +11,11 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.text.Text
 
 object ModItemTab {
+
+    //creating a registry key for Creative Tab
     val REGISTRY_KEY: RegistryKey<ItemGroup> = RegistryKey.of<ItemGroup>(RegistryKeys.ITEM_GROUP, Contract.id("contract_mod_tab"))
 
+    //registering creative tab
     val CONTRACT_CREATIVE_TAB: ItemGroup = Registry.register(
         Registries.ITEM_GROUP,
         REGISTRY_KEY,
@@ -22,11 +25,12 @@ object ModItemTab {
             .build()
     )
 
+    //adding items to the tab (+initializing it)
     fun init() {
         ItemGroupEvents.modifyEntriesEvent(REGISTRY_KEY)
             .register { entries ->
                 entries.add(ModItems.CONTRACT_PAPER)
                 entries.add(ModItems.SIGNED_CONTRACT_PAPER)
-        }
+            }
     }
 }

@@ -13,9 +13,16 @@ object Contract : ModInitializer {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
+
+		//initializing mod items
+		LOGGER.info("Initialisation of Mod Items...")
 		ModItems.init()
+		LOGGER.info("Mod items were initialised successfully.")
+
+		//initializing creative tab (ItemGroup)
+		LOGGER.info("Initialisation of Creative Tab...")
 		ModItemTab.init()
-		LOGGER.info("Hello Fabric world!")
+		LOGGER.info("Creative tab was initialised successfully.")
 	}
 
 	fun id(path: String): Identifier = Identifier(MOD_ID, path)
