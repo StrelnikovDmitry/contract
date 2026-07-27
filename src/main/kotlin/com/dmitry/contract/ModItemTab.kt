@@ -30,6 +30,7 @@ object ModItemTab {
         ItemGroupEvents.modifyEntriesEvent(REGISTRY_KEY)
             .register { entries ->
                 entries.add(ModItems.CONTRACT_PAPER)
+                entries.add(ModItems.FINISHED_CONTRACT_PAPER)
                 entries.add(ModItems.SIGNED_CONTRACT_PAPER)
             }
     }
