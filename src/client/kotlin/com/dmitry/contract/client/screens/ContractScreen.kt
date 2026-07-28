@@ -19,6 +19,9 @@ class ContractScreen: Screen(Text.translatable("contract_screen")) {
         //rendering the screen on which all of that will be displayed
         super.render(context, mouseX, mouseY, delta)
 
+        //darkens the background
+        this.renderBackground(context)
+
         //texture is drawn from left to right and from up to down
         //getting  coordinates where to draw texture
         val x: Int = (width - textureWidth) / 2
