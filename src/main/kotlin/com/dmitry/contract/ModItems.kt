@@ -5,7 +5,7 @@ import net.minecraft.item.Item
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.util.Rarity
-import com.dmitry.contract.CustomItems.*
+import com.dmitry.contract.customitems.*
 
 object ModItems {
     //items

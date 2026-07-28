@@ -1,4 +1,4 @@
-package com.dmitry.contract.CustomItems
+package com.dmitry.contract.customitems
 
 import net.minecraft.client.item.TooltipContext
 import net.minecraft.entity.player.PlayerEntity
@@ -8,14 +8,13 @@ import net.minecraft.text.Text
 import net.minecraft.util.Hand
 import net.minecraft.util.TypedActionResult
 import net.minecraft.world.World
-import org.apache.logging.log4j.core.tools.picocli.CommandLine
 
 class ContractPaper(settings: Settings): Item(settings) {
 
     override fun appendTooltip(stack: ItemStack, world: World?, tooltip: MutableList<Text>, context: TooltipContext) {
-        val data = stack.nbt?.get("data")
+        val data = stack.nbt?.getString("data")
         if (data!=null) {
-            tooltip.add(Text.literal(data.toString()))
+            tooltip.add(Text.literal(data))
         }
     }
 
