@@ -5,13 +5,14 @@ import net.minecraft.item.Item
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.util.Rarity
+import com.dmitry.contract.CustomItems.*
 
 object ModItems {
     //items
     val CONTRACT_PAPER: Item = Registry.register(
         Registries.ITEM,
         Contract.id("contract_paper"),
-        Item(FabricItemSettings().maxCount(1))
+        ContractPaper(FabricItemSettings().maxCount(1))
     )
 
     val FINISHED_CONTRACT_PAPER: Item = Registry.register(
