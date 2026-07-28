@@ -1,5 +1,6 @@
 package com.dmitry.contract.customitems
 
+import com.dmitry.contract.ContractClientServerBridge
 import net.minecraft.client.item.TooltipContext
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
@@ -23,15 +24,13 @@ class ContractPaper(settings: Settings): Item(settings) {
         //getting held item
         val stack: ItemStack = user.getStackInHand(hand)
 
-        //not doing anything on the client side
+        //opening screen on client
         if (world.isClient) {
-            return TypedActionResult.pass(stack)
+            ContractClientServerBridge.opener?.open()
+            return TypedActionResult.success(stack)
         }
 
-        //putting data
-        val dataStored: String = "Hello world"
-        stack.orCreateNbt.putString("data", dataStored)
-
-        return TypedActionResult.success(stack)
+        //skipping on the server side
+        return TypedActionResult.pass(stack)
     }
 }
