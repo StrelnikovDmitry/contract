@@ -2,5 +2,6 @@
   "item.contract.contract_paper": "Контракт",
   "item.contract.finished_contract_paper": "Составленный контракт",
   "item.contract.signed_contract_paper": "Подписанный контракт",
-  "contract_mod_tab_display_name": "Контракты"
+  "contract_mod_tab_display_name": "Контракты",
+  "contract screen": "Контракт"
 }
