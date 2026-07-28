@@ -14,7 +14,9 @@ class ContractPaper(settings: Settings): Item(settings) {
 
     override fun appendTooltip(stack: ItemStack, world: World?, tooltip: MutableList<Text>, context: TooltipContext) {
         val data = stack.nbt?.get("data")
-        tooltip.add(Text.literal(data?.toString() ?: ""))
+        if (data!=null) {
+            tooltip.add(Text.literal(data.toString()))
+        }
     }
 
     //rmb use
