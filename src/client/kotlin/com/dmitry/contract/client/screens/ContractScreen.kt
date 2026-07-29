@@ -1,6 +1,5 @@
 package com.dmitry.contract.client.screens
 
-import com.dmitry.contract.Contract
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.text.Text
