@@ -15,7 +15,7 @@ class ContractScreen: Screen(Text.translatable("contract_screen")) {
     override fun shouldCloseOnEsc(): Boolean = true
 
     //rendering screen
-    override fun render(context: DrawContext?, mouseX: Int, mouseY: Int, delta: Float) {
+    override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
         //rendering the screen on which all of that will be displayed
         super.render(context, mouseX, mouseY, delta)
 
@@ -30,6 +30,6 @@ class ContractScreen: Screen(Text.translatable("contract_screen")) {
         val y: Int = 3
 
         //drawing
-        context?.drawTexture(texture, x, y, 0f, 0f, textureWidth, textureHeight, textureWidth, textureHeight)
+        context.drawTexture(texture, x, y, 0f, 0f, textureWidth, textureHeight, textureWidth, textureHeight)
     }
 }
