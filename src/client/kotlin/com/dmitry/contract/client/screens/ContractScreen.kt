@@ -26,7 +26,7 @@ class ContractScreen: Screen(Text.translatable("contract_screen")) {
         //getting  coordinates where to draw texture
         val x: Int = (width - textureWidth) / 2
 
-        //for some reason, the game multiplies y by 3.
+        //the game multiplies coordinates and texture sizes by gui scale, 3 is the default option in vanilla book.
         val y: Int = 3
 
         //drawing
