@@ -28,7 +28,7 @@ class ContractScreen : Screen(Text.translatable("contract_screen")) {
         contractTextField = TextFieldWidget(
             textRenderer,
             x, y,
-            textureWidth - 32, textureHeight - (2 * y),
+            textureWidth - 32, 5,
             Text.translatable("contract_text")
         ).apply {
             setEditableColor(-12303292)
