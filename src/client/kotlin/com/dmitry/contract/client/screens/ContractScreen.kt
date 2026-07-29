@@ -26,8 +26,8 @@ class ContractScreen: Screen(Text.translatable("contract_screen")) {
         //getting  coordinates where to draw texture
         val x: Int = (width - textureWidth) / 2
 
-        //for some reason, in the game the gap  is 12 pixels
-        val y: Int = 4
+        //for some reason, the game multiplies y by 3.
+        val y: Int = 3
 
         //drawing
         context?.drawTexture(texture, x, y, 0f, 0f, textureWidth, textureHeight, textureWidth, textureHeight)
