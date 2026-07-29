@@ -2,7 +2,7 @@ package com.dmitry.contract.client.screens
 
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
-import net.minecraft.client.gui.widget.EditBoxWidget
+import net.minecraft.client.gui.widget.TextFieldWidget
 import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 
@@ -11,7 +11,9 @@ class ContractScreen : Screen(Text.translatable("contract_screen")) {
     val textureHeight: Int = 180
     val texture = Identifier("contract", "textures/gui/contract_screen.png")
 
-    lateinit var contractTextField: EditBoxWidget
+    val lineGap = 7
+
+    lateinit var contractTextField: TextFieldWidget
 
     //screen should close after escape button is pressed
     override fun shouldCloseOnEsc(): Boolean = true
@@ -23,14 +25,17 @@ class ContractScreen : Screen(Text.translatable("contract_screen")) {
         val x: Int = (width - textureWidth) / 2 + 16
         val y: Int = 16
 
-        contractTextField = EditBoxWidget(
+        contractTextField = TextFieldWidget(
             textRenderer,
             x, y,
             textureWidth - 32, textureHeight - (2 * y),
-            Text.translatable("contract_text"),
             Text.translatable("contract_text")
-        )
+        ).apply {
+            setEditableColor(-12303292)
+            setUneditableColor(-13587920)
+        }
 
+        addSelectableChild(contractTextField)
         addDrawableChild(contractTextField)
     }
 
