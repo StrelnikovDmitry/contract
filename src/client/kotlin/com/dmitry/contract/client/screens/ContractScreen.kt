@@ -22,8 +22,8 @@ class ContractScreen : Screen(Text.translatable("contract_screen")) {
     override fun init() {
         super.init()
 
-        val x: Int = (width - textureWidth) / 2 + 16
-        val y: Int = 16
+        val x: Int = (width - textureWidth) / 2 + 16 + 12
+        val y: Int = 19
 
         contractTextField = TextFieldWidget(
             textRenderer,
@@ -33,6 +33,7 @@ class ContractScreen : Screen(Text.translatable("contract_screen")) {
         ).apply {
             setEditableColor(-12303292)
             setUneditableColor(-13587920)
+            setMaxLength(((textureWidth - 32) / 6) - 2)
         }
 
         addSelectableChild(contractTextField)
