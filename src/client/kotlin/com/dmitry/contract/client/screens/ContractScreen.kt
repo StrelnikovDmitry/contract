@@ -1,17 +1,19 @@
 package com.dmitry.contract.client.screens
 
 import com.dmitry.contract.client.widgets.ContractCheckbox
+import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
-import net.minecraft.client.gui.widget.ButtonWidget
-import net.minecraft.client.gui.widget.CheckboxWidget
-import net.minecraft.client.gui.widget.CyclingButtonWidget
 import net.minecraft.client.gui.widget.TextFieldWidget
-import net.minecraft.command.argument.IdentifierArgumentType.identifier
+import net.minecraft.client.sound.PositionedSoundInstance
+import net.minecraft.sound.SoundEvents
 import net.minecraft.text.Text
 import net.minecraft.util.Identifier
+import org.lwjgl.glfw.GLFW
 
 class ContractScreen : Screen(Text.translatable("contract_screen")) {
+    val client: MinecraftClient = MinecraftClient.getInstance()
+
     val textureWidth: Int = 146
     val textureHeight: Int = 180
     val texture = Identifier("contract", "textures/gui/contract_screen.png")
@@ -20,28 +22,149 @@ class ContractScreen : Screen(Text.translatable("contract_screen")) {
     val buttonTextureCross = Identifier("contract", "textures/gui/cross.png")
     val buttonTextureCheck = Identifier("contract", "textures/gui/check.png")
 
-    val lineGap = 7
+    //index of the selected line
+    var index: Int = 0
 
-    val maxLineAmount: Int = textureWidth/lineGap
+    val lineGap = 9
+
+    val maxLineAmount: Int = (textureWidth-19)/lineGap
 
     val lines: MutableList<Pair<TextFieldWidget, ContractCheckbox>> = mutableListOf()
 
-    //screen should close after escape button is pressed
-    override fun shouldCloseOnEsc(): Boolean = true
+    fun update(line: Pair<TextFieldWidget, ContractCheckbox>?) {
+        if (line != null) {
+
+            //adding the line to the list
+            lines.add(line)
+
+            //adding widgets
+            addSelectableChild(line.first)
+            addSelectableChild(line.second)
+
+            //selecting line
+            setFocused(line.first)
+            index = lines.size - 1
+        }
+
+        else {
+            client.soundManager.play(PositionedSoundInstance.master
+                (SoundEvents.BLOCK_NOTE_BLOCK_HARP.value(), 0.5f, 1.0f)
+            )
+        }
+    }
+
+    //key press listener
+    override fun keyPressed(keyCode: Int, scanCode: Int, modifiers: Int): Boolean {
+
+        //creating new string by pressing enter
+        if (keyCode == GLFW.GLFW_KEY_ENTER) {
+            update(buildLine())
+            return true
+        }
+
+        //screen should close after escape button is pressed
+        else if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
+            close()
+            return true
+        }
+
+        //removing line or the last letter by pressing backspace
+        else if (keyCode == GLFW.GLFW_KEY_BACKSPACE) {
+            if (!lines.isEmpty()) {
+                val pair = lines[index]
+
+                //if there is none focused
+                if (!isFocused) {
+                    return true
+                }
+
+                //if there is no text on the line...
+                else if (pair.first.text.isEmpty()) {
+
+                    //and the checkbox is noot checked...
+                    if (!pair.second.isChecked) {
+                        //remove the line
+                        lines.removeAt(index)
+                        if (index > 0) {
+                            //go up if there is something
+                            index--
+                            setFocused(lines[index].first)
+                            return true
+                        }
+                        //skip if there is none
+                        else {
+                            return true
+                        }
+                    }
+                    //skip if the checkbox is checked
+                    else {
+                        return true
+                    }
+                } else {
+                    //if string is editable
+                    if (!pair.second.isChecked) {
+                        //delete the last symbol
+                        pair.first.text = pair.first.text.dropLast(1)
+                        return true
+                    }
+                    //if it is not - skip
+                    else {
+                        return true
+                    }
+                }
+            } else {return true}
+        }
+
+        //going up
+        else if (keyCode == GLFW.GLFW_KEY_UP) {
+            if (index>0) {
+                index--
+                setFocused(lines[index].first)
+                return true
+            } else {return true}
+        }
+
+        //going down
+        else if (keyCode == GLFW.GLFW_KEY_DOWN) {
+            if (index+1<maxLineAmount) {
+                index++
+                setFocused(lines[index].first)
+                return true
+            } else {return true}
+        }
+
+
+        //giving a key further
+        else {
+            return false
+        }
+    }
+
+    override fun mouseClicked(x: Double, y: Double, button: Int): Boolean {
+        val res = super.mouseClicked(x, y, button)
+        if (focused is TextFieldWidget) {
+            val currentFocus = lines.find { it.first == focused }
+            index = lines.indexOf(currentFocus)
+        }
+        return res
+    }
 
     //build a line and a button near it
-    fun buildLine(i: Int): Pair<TextFieldWidget, ContractCheckbox>? {
-        if (i<maxLineAmount) {
+    fun buildLine(): Pair<TextFieldWidget, ContractCheckbox>? {
+
+        val linesAmount = lines.size
+
+        if (linesAmount<maxLineAmount) {
 
             //building a line
             val x: Int = (width - textureWidth) / 2 + 16 + 12
-            val y: Int = 19 + (i * lineGap)
+            val y: Int = 19 + (linesAmount * lineGap)
 
             var contractTextField = TextFieldWidget(
                 textRenderer,
                 x, y,
                 textureWidth - 32, 5,
-                Text.translatable("contract_text_point$i")
+                Text.translatable("contract_text_point$linesAmount")
             ).apply {
                 setEditableColor(-12303292)
                 setUneditableColor(-13587920)
@@ -60,7 +183,7 @@ class ContractScreen : Screen(Text.translatable("contract_screen")) {
                 buttonTextureCheck,
                 buttonTextureCross,
                 contractTextField,
-                Text.translatable("contract_mark_point$i")
+                Text.translatable("contract_mark_point$linesAmount")
             )
 
             return Pair(contractTextField, checkBox)
@@ -71,13 +194,6 @@ class ContractScreen : Screen(Text.translatable("contract_screen")) {
     //initializing widgets
     override fun init() {
         super.init()
-
-        val line = buildLine(0)
-        if (line!=null) {
-            addSelectableChild(line.first)
-            addSelectableChild(line.second)
-            lines.add(line)
-        }
     }
 
     //rendering screen
