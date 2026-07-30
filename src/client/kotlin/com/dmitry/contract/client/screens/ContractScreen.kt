@@ -193,7 +193,14 @@ class ContractScreen : Screen(Text.translatable("contract_screen")) {
 
     //initializing widgets
     override fun init() {
+        val tempLines = lines.map {it.first.text}
+        lines.clear()
         super.init()
+        for (i in (0..tempLines.size-1)) {
+            val line = buildLine()
+            line?.first?.setText(tempLines[i])
+            update(line)
+        }
     }
 
     //rendering screen
