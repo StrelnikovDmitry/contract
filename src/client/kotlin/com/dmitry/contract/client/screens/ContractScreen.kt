@@ -40,10 +40,6 @@ class ContractScreen : Screen(Text.translatable("contract_screen")) {
             //adding widgets
             addSelectableChild(line.first)
             addSelectableChild(line.second)
-
-            //selecting line
-            setFocused(line.first)
-            index = lines.size - 1
         }
 
         else {
@@ -59,6 +55,8 @@ class ContractScreen : Screen(Text.translatable("contract_screen")) {
         //creating new string by pressing enter
         if (keyCode == GLFW.GLFW_KEY_ENTER) {
             update(buildLine())
+            index = lines.size - 1
+            setFocused(lines[index].first)
             return true
         }
 
@@ -85,6 +83,10 @@ class ContractScreen : Screen(Text.translatable("contract_screen")) {
                     if (!pair.second.isChecked) {
                         //remove the line
                         lines.removeAt(index)
+
+                        //redrawing other lines
+                        redrawLines(index, lines.size)
+
                         if (index > 0) {
                             //go up if there is something
                             index--
@@ -191,16 +193,25 @@ class ContractScreen : Screen(Text.translatable("contract_screen")) {
         return null
     }
 
+    //redrawing lines from x to y-1
+    fun redrawLines(x: Int = 0, y: Int = lines.size) {
+        if (lines.isNotEmpty() && x<y) {
+            val tempLines = lines.slice(x..y - 1).map { it.first.text }
+            lines.subList(x, y).clear()
+            for (i in (x..y - 1)) {
+                val line = buildLine()
+                line?.first?.setText(tempLines[i-x])
+                update(line)
+            }
+            //setting right focus
+            setFocused(lines[index].first)
+        }
+    }
+
     //initializing widgets
     override fun init() {
-        val tempLines = lines.map {it.first.text}
-        lines.clear()
         super.init()
-        for (i in (0..tempLines.size-1)) {
-            val line = buildLine()
-            line?.first?.setText(tempLines[i])
-            update(line)
-        }
+        redrawLines()
     }
 
     //rendering screen
