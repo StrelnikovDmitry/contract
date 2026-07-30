@@ -50,14 +50,20 @@ class ContractScreen : Screen(Text.translatable("contract_screen")) {
             //building a button
             val x_button: Int = (width - textureWidth) / 2 + 16
 
-            var checkBox = CyclingButtonWidget.onOffBuilder(Text.literal("x"),Text.literal("v"))
+            var checkBox = CyclingButtonWidget.onOffBuilder(false)
                 .build(
                     x_button,
                     y,
                     buttonTextureSide,
                     buttonTextureSide,
                     Text.translatable("contract_checkbox$i")
-                )
+                ) {btn, value -> if (value) {
+                        contractTextField.setEditable(false)
+                    }
+                    else {
+                        contractTextField.setEditable(true)
+                    }
+                }
 
             return Pair(contractTextField, checkBox)
         }
