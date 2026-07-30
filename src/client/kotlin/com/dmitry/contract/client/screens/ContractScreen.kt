@@ -24,7 +24,7 @@ class ContractScreen : Screen(Text.translatable("contract_screen")) {
 
     val maxLineAmount: Int = textureWidth/lineGap
 
-    val lines: MutableList<Pair<TextFieldWidget, ButtonWidget>> = mutableListOf()
+    val lines: MutableList<Pair<TextFieldWidget, ContractCheckbox>> = mutableListOf()
 
     //screen should close after escape button is pressed
     override fun shouldCloseOnEsc(): Boolean = true
@@ -74,8 +74,9 @@ class ContractScreen : Screen(Text.translatable("contract_screen")) {
 
         val line = buildLine(0)
         if (line!=null) {
-            addDrawableChild(line.first)
-            addDrawableChild(line.second)
+            addSelectableChild(line.first)
+            addSelectableChild(line.second)
+            lines.add(line)
         }
     }
 
@@ -91,10 +92,14 @@ class ContractScreen : Screen(Text.translatable("contract_screen")) {
         //the game multiplies coordinates and texture sizes by gui scale, 3 is the default option in vanilla book.
         val y: Int = 3
 
+        for (j in lines)
+            j.first.render(context, mouseX, mouseY, delta)
+
         //drawing
         context.drawTexture(texture, x, y, 0f, 0f, textureWidth, textureHeight, textureWidth, textureHeight)
+        context.draw()
 
-        //rendering the screen on which all of that will be displayed
-        super.render(context, mouseX, mouseY, delta)
+        for (j in lines)
+            j.second.render(context, mouseX, mouseY, delta)
     }
 }
