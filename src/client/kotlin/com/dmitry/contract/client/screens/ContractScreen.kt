@@ -126,7 +126,7 @@ class ContractScreen : Screen(Text.translatable("contract_screen")) {
 
         //going down
         else if (keyCode == GLFW.GLFW_KEY_DOWN) {
-            if (index+1<maxLineAmount) {
+            if (index+1<lines.size) {
                 index++
                 setFocused(lines[index].first)
                 return true
