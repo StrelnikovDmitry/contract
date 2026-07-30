@@ -1,8 +1,10 @@
 package com.dmitry.contract.client.screens
 
+import com.dmitry.contract.client.widgets.ContractCheckbox
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.gui.widget.ButtonWidget
+import net.minecraft.client.gui.widget.CheckboxWidget
 import net.minecraft.client.gui.widget.CyclingButtonWidget
 import net.minecraft.client.gui.widget.TextFieldWidget
 import net.minecraft.command.argument.IdentifierArgumentType.identifier
@@ -28,7 +30,7 @@ class ContractScreen : Screen(Text.translatable("contract_screen")) {
     override fun shouldCloseOnEsc(): Boolean = true
 
     //build a line and a button near it
-    fun buildLine(i: Int): Pair<TextFieldWidget, CyclingButtonWidget<Boolean>>? {
+    fun buildLine(i: Int): Pair<TextFieldWidget, ContractCheckbox>? {
         if (i<maxLineAmount) {
 
             //building a line
@@ -49,21 +51,17 @@ class ContractScreen : Screen(Text.translatable("contract_screen")) {
 
             //building a button
             val x_button: Int = (width - textureWidth) / 2 + 16
+            val y_button: Int = y + 2
 
-            var checkBox = CyclingButtonWidget.onOffBuilder(false)
-                .build(
-                    x_button,
-                    y,
-                    buttonTextureSide,
-                    buttonTextureSide,
-                    Text.translatable("contract_checkbox$i")
-                ) {btn, value -> if (value) {
-                        contractTextField.setEditable(false)
-                    }
-                    else {
-                        contractTextField.setEditable(true)
-                    }
-                }
+            var checkBox = ContractCheckbox(
+                x_button,
+                y_button,
+                buttonTextureSide,
+                buttonTextureCheck,
+                buttonTextureCross,
+                contractTextField,
+                Text.translatable("contract_mark_point$i")
+            )
 
             return Pair(contractTextField, checkBox)
         }
@@ -76,9 +74,8 @@ class ContractScreen : Screen(Text.translatable("contract_screen")) {
 
         val line = buildLine(0)
         if (line!=null) {
-            addSelectableChild(line.first)
             addDrawableChild(line.first)
-            addSelectableChild(line.second)
+            addDrawableChild(line.second)
         }
     }
 
@@ -94,10 +91,10 @@ class ContractScreen : Screen(Text.translatable("contract_screen")) {
         //the game multiplies coordinates and texture sizes by gui scale, 3 is the default option in vanilla book.
         val y: Int = 3
 
-        //rendering the screen on which all of that will be displayed
-        super.render(context, mouseX, mouseY, delta)
-
         //drawing
         context.drawTexture(texture, x, y, 0f, 0f, textureWidth, textureHeight, textureWidth, textureHeight)
+
+        //rendering the screen on which all of that will be displayed
+        super.render(context, mouseX, mouseY, delta)
     }
 }
