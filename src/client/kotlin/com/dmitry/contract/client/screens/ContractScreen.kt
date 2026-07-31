@@ -196,12 +196,15 @@ class ContractScreen : Screen(Text.translatable("contract_screen")) {
     //redrawing lines from x to y-1
     fun redrawLines(x: Int = 0, y: Int = lines.size) {
         if (lines.isNotEmpty() && x<y) {
-            val tempLines = lines.slice(x..y - 1).map { it.first.text }
+            val tempLines: List<Pair<String, Boolean>> = lines.slice(x..y - 1).map { Pair(it.first.text, it.second.isChecked) }
             lines.subList(x, y).clear()
             for (i in (x..y - 1)) {
                 val line = buildLine()
-                line?.first?.setText(tempLines[i-x])
+                line?.first?.setText(tempLines[i-x].first)
                 update(line)
+                if (tempLines[i-x].second) {
+                    line?.second?.onPress()
+                }
             }
             //setting right focus
             setFocused(lines[index].first)
