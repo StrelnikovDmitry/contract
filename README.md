@@ -11,8 +11,8 @@
 
 ## 🌟 Planned Features
 
-* 🛠️ **[IN DEVELOPMENT] Interactive Checkboxes** — Create toggleable checklist items directly inside documents.
-* 📝 **[IN DEVELOPMENT] Dynamic Lists** — Bullet points, numbered lists, and auto-indenting text blocks.
+* 🛠️ **[     DONE     ] Interactive Checkboxes** — Create toggleable checklist items directly inside documents.
+* 📝 **[ PARTLY DONE ] Dynamic Lists** — Bullet points, numbered lists, and auto-indenting text blocks.
 * 🎨 **[IN DEVELOPMENT] Rich Text Formatting** — Advanced styling tools including colors, bold/italic/strikethrough toggles, and alignment options.
 * 📜 **[IN DEVELOPMENT] Contract Signing & Binding** — Formalize agreements between players with immutable signatures and timestamps.
 * ⚡ **[IN DEVELOPMENT] Lightweight & Vanilla-Friendly** — Minimal overhead, seamless integration into standard gameplay without bloat.
@@ -25,9 +25,9 @@
 | Feature / Component                      |      Status      |
 | :--------------------------------------- | :---------------: |
 | Mod Setup & Object Initialization        |      ✅ Done      |
-| Item & GUI Registration                  | 🚧 In Development |
-| Custom Book/Contract Screen UI           | 🚧 In Development |
-| Checkboxes & Interactive Text Components | 🚧 In Development |
+| Item & GUI Registration                  |      ✅ Done      |
+| Custom Book/Contract Screen UI           |      ✅ Done      |
+| Checkboxes & Interactive Text Components |  ✅ Partly Done  |
 | Text Formatting & Parsing Engine         | 🚧 In Development |
 | NBT Saving & Network Serialization       | 🚧 In Development |
 
@@ -50,6 +50,11 @@
 To get the contract paper you should craft it via a paper and a feather.
 
 ![Craft](gallery/Craft.png)
+
+
+After crafting the contract right click it and open gui. To create a line with checkbox press enter.
+
+![20260731_140314.png](gallery/GUI_demo.png)
 
 ---
 
