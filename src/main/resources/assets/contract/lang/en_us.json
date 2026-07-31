@@ -3,5 +3,6 @@
   "item.contract.finished_contract_paper": "Finished contract paper",
   "item.contract.signed_contract_paper": "Signed contract paper",
   "contract_mod_tab_display_name": "Contracts",
-  "contract screen": "Contract"
+  "contract screen": "Contract",
+  "done_button": "Done"
 }
