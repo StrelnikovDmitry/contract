@@ -235,41 +235,84 @@ class ContractScreen(val contractItem: ItemStack) : Screen(Text.translatable("co
 
         return ButtonWidget.Builder(
             Text.literal("done_button")
-        ) {button -> close()}
+        ) {button -> save()}
             .dimensions(x, y, x_size, y_size)
             .build()
     }
 
-    //initializing widgets
-    override fun init() {
-        super.init()
-        redrawLines()
-        doneButton = drawDoneButton()
-        addDrawableChild(doneButton)
+    //save lines to nbt
+    fun save() {
+        var count: Int = 0
+        for (i in lines) {
+            contractItem.orCreateNbt.putString("line$count", i.first.text)
+            contractItem.orCreateNbt.putBoolean("check$count", i.second.isChecked)
+            count++
+        }
+        close()
     }
 
-    //rendering screen
-    override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
-        //darkens the background
-        this.renderBackground(context)
+    //load lines from nbt
+    fun load() {
+        val tempLines: MutableList<Pair<String, Boolean>> = mutableListOf()
+        if (contractItem.hasNbt()) {
+            val sizeOfNbt = contractItem.nbt!!.keys.size / 2
+            for (i in 0 .. sizeOfNbt-1) {
+                val line = contractItem.nbt!!.getString("line$i")
+                val check = contractItem.nbt!!.getBoolean("check$i")
 
-        //texture is drawn from left to right and from up to down
-        //getting  coordinates where to draw texture
-        val x: Int = (width - textureWidth) / 2
+                tempLines.add(Pair(line, check))
+            }
+            //creating lines
+            for (i in 0 .. sizeOfNbt-1) {
+                val line = buildLine()
+                line?.first?.setText(tempLines[i].first)
+                addLine(line)
 
-        //the game multiplies coordinates and texture sizes by gui scale, 3 is the default option in vanilla book.
-        val y: Int = 3
+                //checking if the line was checked previously
+                if (tempLines[i].second) {
+                    line?.second?.onPress()
+                }
+            }
 
-        for (j in lines)
-            j.first.render(context, mouseX, mouseY, delta)
-
-        //drawing
-        context.drawTexture(texture, x, y, 0f, 0f, textureWidth, textureHeight, textureWidth, textureHeight)
-        context.draw()
-
-        for (j in lines)
-            j.second.render(context, mouseX, mouseY, delta)
-
-        doneButton.render(context, mouseX, mouseY, delta)
+            //setting right focus
+            index = lines.size-1
+            setFocused(lines[index].first)
+        }
     }
-}
+
+        //initializing widgets
+        override fun init() {
+            if (lines.isEmpty()) {
+                load()
+            }
+            super.init()
+            redrawLines()
+            doneButton = drawDoneButton()
+            addDrawableChild(doneButton)
+        }
+
+        //rendering screen
+        override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
+            //darkens the background
+            this.renderBackground(context)
+
+            //texture is drawn from left to right and from up to down
+            //getting  coordinates where to draw texture
+            val x: Int = (width - textureWidth) / 2
+
+            //the game multiplies coordinates and texture sizes by gui scale, 3 is the default option in vanilla book.
+            val y: Int = 3
+
+            for (j in lines)
+                j.first.render(context, mouseX, mouseY, delta)
+
+            //drawing
+            context.drawTexture(texture, x, y, 0f, 0f, textureWidth, textureHeight, textureWidth, textureHeight)
+            context.draw()
+
+            for (j in lines)
+                j.second.render(context, mouseX, mouseY, delta)
+
+            doneButton.render(context, mouseX, mouseY, delta)
+        }
+    }
