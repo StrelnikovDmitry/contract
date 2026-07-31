@@ -7,12 +7,14 @@ import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.gui.widget.ButtonWidget
 import net.minecraft.client.gui.widget.TextFieldWidget
 import net.minecraft.client.sound.PositionedSoundInstance
+import net.minecraft.item.ItemStack
 import net.minecraft.sound.SoundEvents
 import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 import org.lwjgl.glfw.GLFW
 
-class ContractScreen : Screen(Text.translatable("contract_screen")) {
+class ContractScreen(val contractItem: ItemStack) : Screen(Text.translatable("contract_screen")) {
+
     @Suppress("PROPERTY_HIDES_JAVA_FIELD")
     val client: MinecraftClient = MinecraftClient.getInstance()
 

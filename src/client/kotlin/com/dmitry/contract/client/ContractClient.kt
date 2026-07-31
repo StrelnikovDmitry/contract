@@ -5,6 +5,7 @@ import com.dmitry.contract.ContractScreenOpener
 import com.dmitry.contract.ContractClientServerBridge
 import com.dmitry.contract.client.screens.ContractScreen
 import net.minecraft.client.MinecraftClient
+import net.minecraft.item.ItemStack
 
 object ContractClient : ClientModInitializer {
 	override fun onInitializeClient() {
@@ -14,8 +15,8 @@ object ContractClient : ClientModInitializer {
 		ContractClientServerBridge.opener = object : ContractScreenOpener {
 
 			//opening contract screen
-			override fun open() {
-				MinecraftClient.getInstance().setScreen(ContractScreen())
+			override fun open(contractItem: ItemStack) {
+				MinecraftClient.getInstance().setScreen(ContractScreen(contractItem))
 			}
 		}
 	}

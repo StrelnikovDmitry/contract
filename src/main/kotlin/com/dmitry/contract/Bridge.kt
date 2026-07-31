@@ -1,7 +1,9 @@
 package com.dmitry.contract
 
+import net.minecraft.item.ItemStack
+
 interface ContractScreenOpener {
-    fun open()
+    fun open(x: ItemStack)
 }
 
 object ContractClientServerBridge {
