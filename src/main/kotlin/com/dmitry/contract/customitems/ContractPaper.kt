@@ -12,13 +12,6 @@ import net.minecraft.world.World
 
 class ContractPaper(settings: Settings): Item(settings) {
 
-    override fun appendTooltip(stack: ItemStack, world: World?, tooltip: MutableList<Text>, context: TooltipContext) {
-        val data = stack.nbt?.getString("data")
-        if (data!=null) {
-            tooltip.add(Text.literal(data))
-        }
-    }
-
     //rmb use
     override fun use(world: World, user: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
         //getting held item
