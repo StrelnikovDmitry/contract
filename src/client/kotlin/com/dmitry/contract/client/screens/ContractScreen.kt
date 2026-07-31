@@ -82,6 +82,8 @@ class ContractScreen : Screen(Text.translatable("contract_screen")) {
                     //and the checkbox is noot checked...
                     if (!pair.second.isChecked) {
                         //remove the line
+                        remove(lines[index].first)
+                        remove(lines[index].second)
                         lines.removeAt(index)
 
                         //redrawing other lines
@@ -162,7 +164,7 @@ class ContractScreen : Screen(Text.translatable("contract_screen")) {
             val x: Int = (width - textureWidth) / 2 + 16 + 12
             val y: Int = 19 + (linesAmount * lineGap)
 
-            var contractTextField = TextFieldWidget(
+            val contractTextField = TextFieldWidget(
                 textRenderer,
                 x, y,
                 textureWidth - 32, 5,
@@ -178,7 +180,7 @@ class ContractScreen : Screen(Text.translatable("contract_screen")) {
             val x_button: Int = (width - textureWidth) / 2 + 16
             val y_button: Int = y + 2
 
-            var checkBox = ContractCheckbox(
+            val checkBox = ContractCheckbox(
                 x_button,
                 y_button,
                 buttonTextureSide,
@@ -197,11 +199,23 @@ class ContractScreen : Screen(Text.translatable("contract_screen")) {
     fun redrawLines(x: Int = 0, y: Int = lines.size) {
         if (lines.isNotEmpty() && x<y) {
             val tempLines: List<Pair<String, Boolean>> = lines.slice(x..y - 1).map { Pair(it.first.text, it.second.isChecked) }
+
+            //deleting widgets from the screen
+            lines.subList(x, y).forEach {
+                remove(it.first)
+                remove(it.second)
+            }
+
+            //deleting widgets from the lines list
             lines.subList(x, y).clear()
+
+            //building new lines
             for (i in (x..y - 1)) {
                 val line = buildLine()
                 line?.first?.setText(tempLines[i-x].first)
                 update(line)
+
+                //checking if the line was checked previously
                 if (tempLines[i-x].second) {
                     line?.second?.onPress()
                 }
