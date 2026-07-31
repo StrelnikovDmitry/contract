@@ -12,6 +12,7 @@ import net.minecraft.util.Identifier
 import org.lwjgl.glfw.GLFW
 
 class ContractScreen : Screen(Text.translatable("contract_screen")) {
+    @Suppress("PROPERTY_HIDES_JAVA_FIELD")
     val client: MinecraftClient = MinecraftClient.getInstance()
 
     val textureWidth: Int = 146
