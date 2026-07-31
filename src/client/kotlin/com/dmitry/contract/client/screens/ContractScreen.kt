@@ -4,6 +4,7 @@ import com.dmitry.contract.client.widgets.ContractCheckbox
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
+import net.minecraft.client.gui.widget.ButtonWidget
 import net.minecraft.client.gui.widget.TextFieldWidget
 import net.minecraft.client.sound.PositionedSoundInstance
 import net.minecraft.sound.SoundEvents
@@ -31,6 +32,7 @@ class ContractScreen : Screen(Text.translatable("contract_screen")) {
     val maxLineAmount: Int = (textureWidth-19)/lineGap
 
     val lines: MutableList<Pair<TextFieldWidget, ContractCheckbox>> = mutableListOf()
+    lateinit var doneButton: ButtonWidget
 
     fun addLine(line: Pair<TextFieldWidget, ContractCheckbox>?) {
         if (line != null) {
@@ -224,10 +226,24 @@ class ContractScreen : Screen(Text.translatable("contract_screen")) {
         }
     }
 
+    fun drawDoneButton(x: Int = (width-textureWidth)/2,
+                   y: Int = 17 + textureHeight,
+                   x_size: Int = textureWidth,
+                   y_size: Int = 21): ButtonWidget {
+
+        return ButtonWidget.Builder(
+            Text.literal("done_button")
+        ) {button -> close()}
+            .dimensions(x, y, x_size, y_size)
+            .build()
+    }
+
     //initializing widgets
     override fun init() {
         super.init()
         redrawLines()
+        doneButton = drawDoneButton()
+        addDrawableChild(doneButton)
     }
 
     //rendering screen
@@ -251,5 +267,7 @@ class ContractScreen : Screen(Text.translatable("contract_screen")) {
 
         for (j in lines)
             j.second.render(context, mouseX, mouseY, delta)
+
+        doneButton.render(context, mouseX, mouseY, delta)
     }
 }
