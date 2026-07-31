@@ -234,7 +234,7 @@ class ContractScreen(val contractItem: ItemStack) : Screen(Text.translatable("co
                    y_size: Int = 21): ButtonWidget {
 
         return ButtonWidget.Builder(
-            Text.literal("done_button")
+            Text.translatable("done_button")
         ) {button -> save()}
             .dimensions(x, y, x_size, y_size)
             .build()
