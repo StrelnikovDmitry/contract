@@ -109,8 +109,7 @@ class ContractScreen : Screen(Text.translatable("contract_screen")) {
                     //if string is editable
                     if (!pair.second.isChecked) {
                         //delete the last symbol
-                        pair.first.text = pair.first.text.dropLast(1)
-                        return true
+                        return super.keyPressed(keyCode, scanCode, modifiers)
                     }
                     //if it is not - skip
                     else {
@@ -138,10 +137,9 @@ class ContractScreen : Screen(Text.translatable("contract_screen")) {
             } else {return true}
         }
 
-
         //giving a key further
         else {
-            return false
+            return super.keyPressed(keyCode, scanCode, modifiers)
         }
     }
 
