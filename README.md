@@ -29,7 +29,7 @@
 | Custom Book/Contract Screen UI           |      ✅ Done      |
 | Checkboxes & Interactive Text Components |  ✅ Partly Done  |
 | Text Formatting & Parsing Engine         | 🚧 In Development |
-| NBT Saving & Network Serialization       | 🚧 In Development |
+| NBT Saving & Network Serialization       |      ✅ Done      |
 
 ---
 
