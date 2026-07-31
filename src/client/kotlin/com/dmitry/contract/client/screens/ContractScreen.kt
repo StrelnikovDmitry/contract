@@ -32,7 +32,7 @@ class ContractScreen : Screen(Text.translatable("contract_screen")) {
 
     val lines: MutableList<Pair<TextFieldWidget, ContractCheckbox>> = mutableListOf()
 
-    fun update(line: Pair<TextFieldWidget, ContractCheckbox>?) {
+    fun addLine(line: Pair<TextFieldWidget, ContractCheckbox>?) {
         if (line != null) {
 
             //adding the line to the list
@@ -55,7 +55,7 @@ class ContractScreen : Screen(Text.translatable("contract_screen")) {
 
         //creating new string by pressing enter
         if (keyCode == GLFW.GLFW_KEY_ENTER) {
-            update(buildLine())
+            addLine(buildLine())
             index = lines.size - 1
             setFocused(lines[index].first)
             return true
@@ -212,7 +212,7 @@ class ContractScreen : Screen(Text.translatable("contract_screen")) {
             for (i in (x..y - 1)) {
                 val line = buildLine()
                 line?.first?.setText(tempLines[i-x].first)
-                update(line)
+                addLine(line)
 
                 //checking if the line was checked previously
                 if (tempLines[i-x].second) {
