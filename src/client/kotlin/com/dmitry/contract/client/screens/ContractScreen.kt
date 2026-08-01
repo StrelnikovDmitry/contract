@@ -10,15 +10,13 @@ import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.gui.widget.ButtonWidget
 import net.minecraft.client.gui.widget.TextFieldWidget
 import net.minecraft.client.sound.PositionedSoundInstance
-import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
-import net.minecraft.network.PacketByteBuf
 import net.minecraft.sound.SoundEvents
 import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 import org.lwjgl.glfw.GLFW
 
-class ContractScreen(var contractItem: ItemStack, val player: PlayerEntity) : Screen(Text.translatable("contract_screen")) {
+class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("contract_screen")) {
 
     @Suppress("PROPERTY_HIDES_JAVA_FIELD")
     val client: MinecraftClient = MinecraftClient.getInstance()
@@ -241,7 +239,7 @@ class ContractScreen(var contractItem: ItemStack, val player: PlayerEntity) : Sc
 
         return ButtonWidget.Builder(
             Text.translatable("done_button")
-        ) {button -> save()}
+        ) {save()}
             .dimensions(x, y, x_size, y_size)
             .build()
     }
@@ -253,28 +251,43 @@ class ContractScreen(var contractItem: ItemStack, val player: PlayerEntity) : Sc
 
         return ButtonWidget.Builder(
             Text.translatable("sign_button")
-        ) {button -> sign()}
+        ) {sign()}
             .dimensions(x, y, x_size, y_size)
             .build()
     }
 
+    //signing contract mechanic
     fun sign() {
+        //saving text to nbt before signing
+        save()
+
+        //creating packet
         val packet = PacketByteBufs.create()
         packet.writeBoolean(true)
 
+        //sending packet
         ClientPlayNetworking.send(ModNetworking.SIGN_PACKET, packet)
         close()
     }
 
     //save lines to nbt
     fun save() {
+        //if there is something to save
         if (lines.size > 0) {
+
+            //creating a packet
             val packet = PacketByteBufs.create()
+
+            //writing amount of lines
             packet.writeInt(lines.size)
+
+            //writing strings
             for (i in lines) {
                 packet.writeString(i.first.text)
                 packet.writeBoolean(i.second.isChecked)
             }
+
+            //sending packet
             ClientPlayNetworking.send(ModNetworking.NBT_PACKET ,packet)
         }
         close()
