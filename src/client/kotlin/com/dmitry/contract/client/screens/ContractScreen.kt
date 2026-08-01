@@ -7,13 +7,14 @@ import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.gui.widget.ButtonWidget
 import net.minecraft.client.gui.widget.TextFieldWidget
 import net.minecraft.client.sound.PositionedSoundInstance
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.sound.SoundEvents
 import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 import org.lwjgl.glfw.GLFW
 
-class ContractScreen(val contractItem: ItemStack) : Screen(Text.translatable("contract_screen")) {
+class ContractScreen(var contractItem: ItemStack, val player: PlayerEntity) : Screen(Text.translatable("contract_screen")) {
 
     @Suppress("PROPERTY_HIDES_JAVA_FIELD")
     val client: MinecraftClient = MinecraftClient.getInstance()
@@ -35,6 +36,7 @@ class ContractScreen(val contractItem: ItemStack) : Screen(Text.translatable("co
 
     val lines: MutableList<Pair<TextFieldWidget, ContractCheckbox>> = mutableListOf()
     lateinit var doneButton: ButtonWidget
+    lateinit var signButton: ButtonWidget
 
     fun addLine(line: Pair<TextFieldWidget, ContractCheckbox>?) {
         if (line != null) {
@@ -228,10 +230,10 @@ class ContractScreen(val contractItem: ItemStack) : Screen(Text.translatable("co
         }
     }
 
-    fun drawDoneButton(x: Int = (width-textureWidth)/2,
-                   y: Int = 17 + textureHeight,
-                   x_size: Int = textureWidth,
-                   y_size: Int = 21): ButtonWidget {
+    fun drawDoneButton(x: Int = ((((width - textureWidth) / 2) - 24) + 98) + 4,
+                       y: Int = 17 + textureHeight,
+                       x_size: Int = 98,
+                       y_size: Int = 21): ButtonWidget {
 
         return ButtonWidget.Builder(
             Text.translatable("done_button")
@@ -239,6 +241,20 @@ class ContractScreen(val contractItem: ItemStack) : Screen(Text.translatable("co
             .dimensions(x, y, x_size, y_size)
             .build()
     }
+
+    fun drawSignButton(x: Int = ((width-textureWidth)/2)-24,
+                       y: Int = 17 + textureHeight,
+                       x_size: Int = 98,
+                       y_size: Int = 21): ButtonWidget {
+
+        return ButtonWidget.Builder(
+            Text.translatable("sign_button")
+        ) {button -> sign()}
+            .dimensions(x, y, x_size, y_size)
+            .build()
+    }
+
+    fun sign() {}
 
     //save lines to nbt
     fun save() {
@@ -251,8 +267,8 @@ class ContractScreen(val contractItem: ItemStack) : Screen(Text.translatable("co
         close()
     }
 
-    //load lines from nbt
-    fun load() {
+    //load lines from nbt and pack it into list
+    fun loadAsList(): MutableList<Pair<String, Boolean>> {
         val tempLines: MutableList<Pair<String, Boolean>> = mutableListOf()
         if (contractItem.hasNbt()) {
             val sizeOfNbt = contractItem.nbt!!.keys.size / 2
@@ -262,8 +278,14 @@ class ContractScreen(val contractItem: ItemStack) : Screen(Text.translatable("co
 
                 tempLines.add(Pair(line, check))
             }
+        }
+        return tempLines
+    }
+
+    fun loadFromLines(tempLines: MutableList<Pair<String, Boolean>>) {
+        if (!tempLines.isEmpty()) {
             //creating lines
-            for (i in 0 .. sizeOfNbt-1) {
+            for (i in 0..tempLines.size - 1) {
                 val line = buildLine()
                 line?.first?.setText(tempLines[i].first)
                 addLine(line)
@@ -275,7 +297,7 @@ class ContractScreen(val contractItem: ItemStack) : Screen(Text.translatable("co
             }
 
             //setting right focus
-            index = lines.size-1
+            index = lines.size - 1
             setFocused(lines[index].first)
         }
     }
@@ -283,12 +305,14 @@ class ContractScreen(val contractItem: ItemStack) : Screen(Text.translatable("co
         //initializing widgets
         override fun init() {
             if (lines.isEmpty()) {
-                load()
+                loadFromLines(loadAsList())
             }
             super.init()
             redrawLines()
             doneButton = drawDoneButton()
             addDrawableChild(doneButton)
+            signButton = drawSignButton()
+            addDrawableChild(signButton)
         }
 
         //rendering screen
@@ -314,5 +338,6 @@ class ContractScreen(val contractItem: ItemStack) : Screen(Text.translatable("co
                 j.second.render(context, mouseX, mouseY, delta)
 
             doneButton.render(context, mouseX, mouseY, delta)
+            signButton.render(context, mouseX, mouseY, delta)
         }
     }

@@ -1,11 +1,9 @@
 package com.dmitry.contract.customitems
 
 import com.dmitry.contract.ContractClientServerBridge
-import net.minecraft.client.item.TooltipContext
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
-import net.minecraft.text.Text
 import net.minecraft.util.Hand
 import net.minecraft.util.TypedActionResult
 import net.minecraft.world.World
@@ -19,7 +17,7 @@ class ContractPaper(settings: Settings): Item(settings) {
 
         //opening screen on client
         if (world.isClient) {
-            ContractClientServerBridge.opener?.open(stack)
+            ContractClientServerBridge.opener?.open(stack, user)
             return TypedActionResult.success(stack)
         }
 
