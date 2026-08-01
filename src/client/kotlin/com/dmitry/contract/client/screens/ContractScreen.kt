@@ -1,6 +1,9 @@
 package com.dmitry.contract.client.screens
 
+import com.dmitry.contract.ModNetworking
 import com.dmitry.contract.client.widgets.ContractCheckbox
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
@@ -9,6 +12,7 @@ import net.minecraft.client.gui.widget.TextFieldWidget
 import net.minecraft.client.sound.PositionedSoundInstance
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
+import net.minecraft.network.PacketByteBuf
 import net.minecraft.sound.SoundEvents
 import net.minecraft.text.Text
 import net.minecraft.util.Identifier
@@ -254,15 +258,24 @@ class ContractScreen(var contractItem: ItemStack, val player: PlayerEntity) : Sc
             .build()
     }
 
-    fun sign() {}
+    fun sign() {
+        val packet = PacketByteBufs.create()
+        packet.writeBoolean(true)
+
+        ClientPlayNetworking.send(ModNetworking.SIGN_PACKET, packet)
+        close()
+    }
 
     //save lines to nbt
     fun save() {
-        var count: Int = 0
-        for (i in lines) {
-            contractItem.orCreateNbt.putString("line$count", i.first.text)
-            contractItem.orCreateNbt.putBoolean("check$count", i.second.isChecked)
-            count++
+        if (lines.size > 0) {
+            val packet = PacketByteBufs.create()
+            packet.writeInt(lines.size)
+            for (i in lines) {
+                packet.writeString(i.first.text)
+                packet.writeBoolean(i.second.isChecked)
+            }
+            ClientPlayNetworking.send(ModNetworking.NBT_PACKET ,packet)
         }
         close()
     }

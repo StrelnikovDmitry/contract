@@ -1,9 +1,10 @@
-package com.dmitry.contract.customitems
+package com.dmitry.contract.items
 
 import com.dmitry.contract.ContractClientServerBridge
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
+import net.minecraft.network.PacketByteBuf
 import net.minecraft.util.Hand
 import net.minecraft.util.TypedActionResult
 import net.minecraft.world.World
@@ -24,4 +25,16 @@ class ContractPaper(settings: Settings): Item(settings) {
         //skipping on the server side
         return TypedActionResult.pass(stack)
     }
+
+    fun save(item: ItemStack, packet: PacketByteBuf) {
+        val size = packet.readInt()
+        var count: Int = 0
+        for (i in 0..size-1) {
+            item.orCreateNbt.putString("line$count", packet.readString())
+            item.orCreateNbt.putBoolean("check$count", packet.readBoolean())
+            count++
+        }
+    }
+
+    fun load() {}
 }

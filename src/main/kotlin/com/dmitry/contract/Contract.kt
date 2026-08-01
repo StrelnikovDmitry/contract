@@ -1,6 +1,10 @@
 package com.dmitry.contract
 
 import net.fabricmc.api.ModInitializer
+import com.dmitry.contract.items.ContractPaper
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
+import net.minecraft.item.ItemStack
+import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import org.slf4j.LoggerFactory
 
@@ -23,6 +27,24 @@ object Contract : ModInitializer {
 		LOGGER.info("Initialisation of Creative Tab...")
 		ModItemTab.init()
 		LOGGER.info("Creative tab was initialised successfully.")
+
+		ServerPlayNetworking.registerGlobalReceiver(ModNetworking.SIGN_PACKET) {server, player, handler, buf, responseSender ->
+			val isSigned = buf.readBoolean()
+
+			server.execute {
+				val stack: ItemStack = ItemStack(ModItems.FINISHED_CONTRACT_PAPER)
+				player.setStackInHand(Hand.MAIN_HAND, stack)
+			}
+		}
+
+		ServerPlayNetworking.registerGlobalReceiver(ModNetworking.NBT_PACKET) {server, player, handler, buf, responseSender ->
+			val stack = player.getStackInHand(Hand.MAIN_HAND)
+			val itemInstance = stack.item as ContractPaper
+
+			itemInstance.save(stack, buf)
+
+			server.execute {}
+		}
 	}
 
 	fun id(path: String): Identifier = Identifier(MOD_ID, path)
