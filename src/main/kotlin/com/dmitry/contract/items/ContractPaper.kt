@@ -1,6 +1,7 @@
 package com.dmitry.contract.items
 
 import com.dmitry.contract.ContractClientServerBridge
+import com.dmitry.contract.ModItems
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
@@ -36,5 +37,13 @@ class ContractPaper(settings: Settings): Item(settings) {
         }
     }
 
-    fun load() {}
+    fun onSign(player: PlayerEntity) {
+        val nbtToCopy = player.getStackInHand(Hand.MAIN_HAND).nbt
+        val newStack = ItemStack(ModItems.FINISHED_CONTRACT_PAPER).apply { setNbt(nbtToCopy?.copy()) }
+        player.setStackInHand(
+            Hand.MAIN_HAND,
+            newStack
+        )
+
+    }
 }

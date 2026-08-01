@@ -257,7 +257,10 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
 
         return ButtonWidget.Builder(
             Text.translatable("done_button")
-        ) {save()}
+        ) {
+            save()
+            close()
+        }
             .dimensions(x, y, x_size, y_size)
             .build()
     }
@@ -269,7 +272,10 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
 
         return ButtonWidget.Builder(
             Text.translatable("sign_button")
-        ) {sign()}
+        ) {
+            sign()
+            close()
+        }
             .dimensions(x, y, x_size, y_size)
             .build()
     }
@@ -285,7 +291,6 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
 
         //sending packet
         ClientPlayNetworking.send(ModNetworking.SIGN_PACKET, packet)
-        close()
     }
 
     //save lines to nbt
@@ -308,7 +313,6 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
             //sending packet
             ClientPlayNetworking.send(ModNetworking.NBT_PACKET ,packet)
         }
-        close()
     }
 
     //load lines from nbt and pack it into list
