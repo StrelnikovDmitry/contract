@@ -16,8 +16,8 @@ object ContractClient : ClientModInitializer {
 		ContractClientServerBridge.opener = object : ContractScreenOpener {
 
 			//opening contract screen
-			override fun open(contractItem: ItemStack, player: PlayerEntity) {
-				MinecraftClient.getInstance().setScreen(ContractScreen(contractItem, player))
+			override fun open(contractItem: ItemStack) {
+				MinecraftClient.getInstance().setScreen(ContractScreen(contractItem))
 			}
 		}
 	}

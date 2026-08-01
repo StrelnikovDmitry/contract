@@ -18,7 +18,7 @@ class ContractPaper(settings: Settings): Item(settings) {
 
         //opening screen on client
         if (world.isClient) {
-            ContractClientServerBridge.opener?.open(stack, user)
+            ContractClientServerBridge.opener?.open(stack)
             return TypedActionResult.success(stack)
         }
 
