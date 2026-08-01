@@ -1,5 +1,6 @@
 package com.dmitry.contract.client.screens
 
+import com.dmitry.contract.ModItems
 import com.dmitry.contract.ModNetworking
 import com.dmitry.contract.client.widgets.ContractCheckbox
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
@@ -56,6 +57,13 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
                 (SoundEvents.BLOCK_NOTE_BLOCK_HARP.value(), 0.5f, 1.0f)
             )
         }
+    }
+
+    override fun charTyped(chr: Char, modifiers: Int): Boolean {
+        if (contractItem.item != ModItems.FINISHED_CONTRACT_PAPER) {
+            return super.charTyped(chr, modifiers)
+        }
+        return false
     }
 
     //key press listener
