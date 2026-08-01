@@ -5,6 +5,7 @@ import com.dmitry.contract.ModItems
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
+import net.minecraft.nbt.NbtCompound
 import net.minecraft.network.PacketByteBuf
 import net.minecraft.util.Hand
 import net.minecraft.util.TypedActionResult
@@ -27,12 +28,12 @@ class ContractPaper(settings: Settings): Item(settings) {
         return TypedActionResult.pass(stack)
     }
 
-    fun save(item: ItemStack, packet: PacketByteBuf) {
-        val size = packet.readInt()
+    fun save(item: ItemStack, data: List<Pair<String, Boolean>>) {
+        val nbt = item.orCreateNbt
         var count: Int = 0
-        for (i in 0..size-1) {
-            item.orCreateNbt.putString("line$count", packet.readString())
-            item.orCreateNbt.putBoolean("check$count", packet.readBoolean())
+        for (entry in data) {
+            nbt.putString("line$count", entry.first)
+            nbt.putBoolean("check$count", entry.second)
             count++
         }
     }

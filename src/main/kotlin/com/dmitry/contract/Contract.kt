@@ -28,6 +28,7 @@ object Contract : ModInitializer {
 		ModItemTab.init()
 		LOGGER.info("Creative tab was initialised successfully.")
 
+		//signing
 		ServerPlayNetworking.registerGlobalReceiver(ModNetworking.SIGN_PACKET) {server, player, handler, buf, responseSender ->
 			val isSigned = buf.readBoolean()
 			val stack = player.getStackInHand(Hand.MAIN_HAND)
@@ -38,13 +39,16 @@ object Contract : ModInitializer {
 			}
 		}
 
+		//saving
 		ServerPlayNetworking.registerGlobalReceiver(ModNetworking.NBT_PACKET) {server, player, handler, buf, responseSender ->
 			val stack = player.getStackInHand(Hand.MAIN_HAND)
 			val itemInstance = stack.item as ContractPaper
 
-			itemInstance.save(stack, buf)
+			val data: List<Pair<String, Boolean>> = (0..buf.readInt()-1).map { buf.readString() to buf.readBoolean()}
 
-			server.execute {}
+			server.execute {
+				itemInstance.save(stack, data)
+			}
 		}
 	}
 
