@@ -41,6 +41,10 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
     lateinit var doneButton: ButtonWidget
     lateinit var signButton: ButtonWidget
 
+    fun isEditable(): Boolean {
+        return (contractItem.item == ModItems.CONTRACT_PAPER)
+    }
+
     fun addLine(line: Pair<TextFieldWidget, ContractCheckbox>?) {
         if (line != null) {
 
@@ -60,7 +64,7 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
     }
 
     override fun charTyped(chr: Char, modifiers: Int): Boolean {
-        if (contractItem.item != ModItems.FINISHED_CONTRACT_PAPER) {
+        if (isEditable()) {
             return super.charTyped(chr, modifiers)
         }
         return false
@@ -71,10 +75,12 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
 
         //creating new string by pressing enter
         if (keyCode == GLFW.GLFW_KEY_ENTER) {
-            addLine(buildLine())
-            index = lines.size - 1
-            setFocused(lines[index].first)
-            return true
+            if (isEditable()) {
+                addLine(buildLine())
+                index = lines.size - 1
+                setFocused(lines[index].first)
+                return true
+            }  else {return true}
         }
 
         //screen should close after escape button is pressed
@@ -85,52 +91,56 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
 
         //removing line or the last letter by pressing backspace
         else if (keyCode == GLFW.GLFW_KEY_BACKSPACE) {
-            if (!lines.isEmpty()) {
-                val pair = lines[index]
+            if (isEditable()) {
+                if (!lines.isEmpty()) {
+                    val pair = lines[index]
 
-                //if there is none focused
-                if (!isFocused) {
-                    return true
-                }
+                    //if there is none focused
+                    if (!isFocused) {
+                        return true
+                    }
 
-                //if there is no text on the line...
-                else if (pair.first.text.isEmpty()) {
+                    //if there is no text on the line...
+                    else if (pair.first.text.isEmpty()) {
 
-                    //and the checkbox is noot checked...
-                    if (!pair.second.isChecked) {
-                        //remove the line
-                        remove(lines[index].first)
-                        remove(lines[index].second)
-                        lines.removeAt(index)
+                        //and the checkbox is noot checked...
+                        if (!pair.second.isChecked) {
+                            //remove the line
+                            remove(lines[index].first)
+                            remove(lines[index].second)
+                            lines.removeAt(index)
 
-                        //redrawing other lines
-                        redrawLines(index, lines.size)
+                            //redrawing other lines
+                            redrawLines(index, lines.size)
 
-                        if (index > 0) {
-                            //go up if there is something
-                            index--
-                            setFocused(lines[index].first)
+                            if (index > 0) {
+                                //go up if there is something
+                                index--
+                                setFocused(lines[index].first)
+                                return true
+                            }
+                            //skip if there is none
+                            else {
+                                return true
+                            }
+                        }
+                        //skip if the checkbox is checked
+                        else {
                             return true
                         }
-                        //skip if there is none
+                    } else {
+                        //if string is editable
+                        if (!pair.second.isChecked) {
+                            //delete the last symbol
+                            return super.keyPressed(keyCode, scanCode, modifiers)
+                        }
+                        //if it is not - skip
                         else {
                             return true
                         }
                     }
-                    //skip if the checkbox is checked
-                    else {
-                        return true
-                    }
                 } else {
-                    //if string is editable
-                    if (!pair.second.isChecked) {
-                        //delete the last symbol
-                        return super.keyPressed(keyCode, scanCode, modifiers)
-                    }
-                    //if it is not - skip
-                    else {
-                        return true
-                    }
+                    return true
                 }
             } else {return true}
         }
