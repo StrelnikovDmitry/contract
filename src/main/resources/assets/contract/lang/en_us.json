@@ -4,5 +4,6 @@
   "item.contract.signed_contract_paper": "Signed contract paper",
   "contract_mod_tab_display_name": "Contracts",
   "contract screen": "Contract",
-  "done_button": "Done"
+  "done_button": "Done",
+  "sign_button": "Sign"
 }
