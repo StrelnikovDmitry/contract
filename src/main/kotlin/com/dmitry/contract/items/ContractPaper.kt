@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.network.PacketByteBuf
 import net.minecraft.text.Text
+import net.minecraft.util.Formatting
 import net.minecraft.util.Hand
 import net.minecraft.util.TypedActionResult
 import net.minecraft.world.World
@@ -53,7 +54,7 @@ class ContractPaper(settings: Settings): Item(settings) {
     override fun appendTooltip(stack: ItemStack, world: World?, tooltip: MutableList<Text>, context: TooltipContext?) {
         val author = stack.orCreateNbt.getString("author")
         if (author.isNotBlank()) {
-            tooltip.add(Text.literal(author))
+            tooltip.add(Text.literal(author).formatted(Formatting.DARK_GRAY))
         }
         super.appendTooltip(stack, world, tooltip, context)
     }
