@@ -319,7 +319,8 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
     fun loadAsList(): MutableList<Pair<String, Boolean>> {
         val tempLines: MutableList<Pair<String, Boolean>> = mutableListOf()
         if (contractItem.hasNbt()) {
-            val sizeOfNbt = contractItem.nbt!!.keys.size / 2
+            var sizeOfNbt = contractItem.nbt!!.keys.size / 2
+            if (!isEditable()) {sizeOfNbt = (contractItem.nbt!!.keys.size - 1) / 2}
             for (i in 0 .. sizeOfNbt-1) {
                 val line = contractItem.nbt!!.getString("line$i")
                 val check = contractItem.nbt!!.getBoolean("check$i")
