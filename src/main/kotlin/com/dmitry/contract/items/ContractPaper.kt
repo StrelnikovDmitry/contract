@@ -14,6 +14,11 @@ import net.minecraft.world.World
 
 class ContractPaper(settings: Settings): Item(settings) {
 
+    //glint when the contract is signed by both sides
+    override fun hasGlint(stack: ItemStack): Boolean {
+        return stack.item  == ModItems.SIGNED_CONTRACT_PAPER
+    }
+
     //rmb use
     override fun use(world: World, user: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
         //getting held item
