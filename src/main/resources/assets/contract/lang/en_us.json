@@ -6,6 +6,6 @@
   "contract screen": "Contract",
   "done_button": "Done",
   "sign_button": "Sign",
-  "author_is": "Author:",
-  "signee_is": "Signee:"
+  "author_is": "Author: ",
+  "signee_is": "Signee: "
 }

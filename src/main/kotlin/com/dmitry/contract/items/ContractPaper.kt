@@ -74,7 +74,7 @@ class ContractPaper(settings: Settings): Item(settings) {
         }
         val signee = stack.orCreateNbt.getString("signee")
         if (signee.isNotBlank()) {
-            tooltip.add(Text.literal("signee_is").append(Text.literal(signee)).formatted(Formatting.DARK_GRAY))
+            tooltip.add(Text.translatable("signee_is").append(Text.literal(signee)).formatted(Formatting.DARK_GRAY))
         }
         super.appendTooltip(stack, world, tooltip, context)
     }
