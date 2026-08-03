@@ -203,7 +203,7 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
                 textRenderer,
                 x, y,
                 textureWidth - 32, 5,
-                Text.translatable("contract_text_point$linesAmount")
+                Text.literal("contract_text_point$linesAmount")
             ).apply {
                 setEditableColor(-12303292)
                 setUneditableColor(-13587920)
@@ -222,7 +222,7 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
                 buttonTextureCheck,
                 buttonTextureCross,
                 contractTextField,
-                Text.translatable("contract_mark_point$linesAmount")
+                Text.literal("contract_mark_point$linesAmount")
             ).apply {
                 active = !isLocked()
             }
