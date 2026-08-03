@@ -16,6 +16,7 @@ object ModItemTab {
     val REGISTRY_KEY: RegistryKey<ItemGroup> = RegistryKey.of<ItemGroup>(RegistryKeys.ITEM_GROUP, Contract.id("contract_mod_tab"))
 
     //registering creative tab
+    @Suppress("UNUSED")
     val CONTRACT_CREATIVE_TAB: ItemGroup = Registry.register(
         Registries.ITEM_GROUP,
         REGISTRY_KEY,
