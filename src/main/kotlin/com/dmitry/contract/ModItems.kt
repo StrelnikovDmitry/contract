@@ -24,7 +24,7 @@ object ModItems {
     val SIGNED_CONTRACT_PAPER: Item = Registry.register(
         Registries.ITEM,
         Contract.id("signed_contract_paper"),
-        Item(FabricItemSettings().maxCount(1).rarity(Rarity.EPIC))
+        ContractPaper(FabricItemSettings().maxCount(1).rarity(Rarity.EPIC))
     )
 
     //---

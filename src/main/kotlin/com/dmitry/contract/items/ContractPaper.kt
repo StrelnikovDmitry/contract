@@ -51,10 +51,23 @@ class ContractPaper(settings: Settings): Item(settings) {
 
     }
 
+    fun onSecondSign(player: PlayerEntity) {
+        val nbtToCopy = player.getStackInHand(Hand.MAIN_HAND).orCreateNbt.apply { putString("signee", player.entityName) }
+        val newStack = ItemStack(ModItems.SIGNED_CONTRACT_PAPER).apply { setNbt(nbtToCopy.copy()) }
+        player.setStackInHand(
+            Hand.MAIN_HAND,
+            newStack
+        )
+    }
+
     override fun appendTooltip(stack: ItemStack, world: World?, tooltip: MutableList<Text>, context: TooltipContext?) {
         val author = stack.orCreateNbt.getString("author")
         if (author.isNotBlank()) {
             tooltip.add(Text.literal(author).formatted(Formatting.DARK_GRAY))
+        }
+        val signee = stack.orCreateNbt.getString("signee")
+        if (signee.isNotBlank()) {
+            tooltip.add(Text.literal(signee).formatted(Formatting.DARK_GRAY))
         }
         super.appendTooltip(stack, world, tooltip, context)
     }
