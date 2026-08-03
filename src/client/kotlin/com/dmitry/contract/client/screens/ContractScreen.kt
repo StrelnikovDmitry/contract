@@ -303,23 +303,26 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
 
     //save lines to nbt
     fun save() {
-        //if there is something to save
-        if (lines.size > 0) {
+        //if there could have been any changes
+        if (!isFocusable()) {
+            //if there is something to save
+            if (lines.size > 0) {
 
-            //creating a packet
-            val packet = PacketByteBufs.create()
+                //creating a packet
+                val packet = PacketByteBufs.create()
 
-            //writing amount of lines
-            packet.writeInt(lines.size)
+                //writing amount of lines
+                packet.writeInt(lines.size)
 
-            //writing strings
-            for (i in lines) {
-                packet.writeString(i.first.text)
-                packet.writeBoolean(i.second.isChecked)
+                //writing strings
+                for (i in lines) {
+                    packet.writeString(i.first.text)
+                    packet.writeBoolean(i.second.isChecked)
+                }
+
+                //sending packet
+                ClientPlayNetworking.send(ModNetworking.NBT_PACKET, packet)
             }
-
-            //sending packet
-            ClientPlayNetworking.send(ModNetworking.NBT_PACKET ,packet)
         }
     }
 
