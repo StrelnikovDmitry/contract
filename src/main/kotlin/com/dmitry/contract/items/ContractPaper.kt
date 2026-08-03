@@ -29,6 +29,7 @@ class ContractPaper(settings: Settings): Item(settings) {
         return TypedActionResult.pass(stack)
     }
 
+    //saving to nbt
     fun save(item: ItemStack, data: List<Pair<String, Boolean>>) {
         val nbt = item.orCreateNbt
         var count: Int = 0
@@ -39,6 +40,7 @@ class ContractPaper(settings: Settings): Item(settings) {
         }
     }
 
+    //signing contrac paper
     fun onSign(player: PlayerEntity) {
         val nbtToCopy = player.getStackInHand(Hand.MAIN_HAND).orCreateNbt.apply { putString("author", player.entityName) }
         val newStack = ItemStack(ModItems.FINISHED_CONTRACT_PAPER).apply { setNbt(nbtToCopy.copy()) }
@@ -49,6 +51,7 @@ class ContractPaper(settings: Settings): Item(settings) {
 
     }
 
+    //signing final contract paper
     fun onFinalSign(player: PlayerEntity) {
         val nbtToCopy = player.getStackInHand(Hand.MAIN_HAND).orCreateNbt.apply { putString("signee", player.entityName) }
         val newStack = ItemStack(ModItems.SIGNED_CONTRACT_PAPER).apply { setNbt(nbtToCopy.copy()) }
@@ -58,6 +61,7 @@ class ContractPaper(settings: Settings): Item(settings) {
         )
     }
 
+    //show tooltips
     override fun appendTooltip(stack: ItemStack, world: World?, tooltip: MutableList<Text>, context: TooltipContext?) {
         val author = stack.orCreateNbt.getString("author")
         if (author.isNotBlank()) {
