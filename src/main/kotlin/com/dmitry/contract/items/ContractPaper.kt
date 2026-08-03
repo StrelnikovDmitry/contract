@@ -70,11 +70,11 @@ class ContractPaper(settings: Settings): Item(settings) {
     override fun appendTooltip(stack: ItemStack, world: World?, tooltip: MutableList<Text>, context: TooltipContext?) {
         val author = stack.orCreateNbt.getString("author")
         if (author.isNotBlank()) {
-            tooltip.add(Text.literal(author).formatted(Formatting.DARK_GRAY))
+            tooltip.add(Text.translatable("author_is").append(Text.literal(author)).formatted(Formatting.DARK_GRAY))
         }
         val signee = stack.orCreateNbt.getString("signee")
         if (signee.isNotBlank()) {
-            tooltip.add(Text.literal(signee).formatted(Formatting.DARK_GRAY))
+            tooltip.add(Text.literal("signee_is").append(Text.literal(signee)).formatted(Formatting.DARK_GRAY))
         }
         super.appendTooltip(stack, world, tooltip, context)
     }

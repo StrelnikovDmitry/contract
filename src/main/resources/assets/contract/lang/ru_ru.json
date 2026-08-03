@@ -5,5 +5,7 @@
   "contract_mod_tab_display_name": "Контракты",
   "contract screen": "Контракт",
   "done_button": "Готово",
-  "sign_button": "Подписать"
+  "sign_button": "Подписать",
+  "author_is": "Автор:",
+  "signee_is": "Подписавший:"
 }
