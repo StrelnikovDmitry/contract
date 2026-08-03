@@ -37,7 +37,7 @@ class ContractPaper(settings: Settings): Item(settings) {
     //saving to nbt
     fun save(item: ItemStack, data: List<Pair<String, Boolean>>) {
         val nbt = item.orCreateNbt
-        var count: Int = 0
+        var count = 0
         for (entry in data) {
             nbt.putString("line$count", entry.first)
             nbt.putBoolean("check$count", entry.second)
