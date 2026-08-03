@@ -223,7 +223,9 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
                 buttonTextureCross,
                 contractTextField,
                 Text.translatable("contract_mark_point$linesAmount")
-            )
+            ).apply {
+                active = !isLocked()
+            }
 
             return Pair(contractTextField, checkBox)
         }
@@ -253,10 +255,6 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
                 //checking if the line was checked previously
                 if (tempLines[i-x].second) {
                     line?.second?.onPress()
-                }
-
-                if(isLocked()) {
-                    line?.second?.active = false
                 }
             }
             //setting right focus
@@ -362,13 +360,6 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
                 //checking if the line was checked previously
                 if (tempLines[i].second) {
                     line?.second?.onPress()
-                }
-
-                //setting checkboxes passive if item is finished contract paper
-                if(isLocked()) {
-                    for (line in lines) {
-                        line.second.active = false
-                    }
                 }
             }
 
