@@ -6,8 +6,6 @@ import net.minecraft.client.item.TooltipContext
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
-import net.minecraft.nbt.NbtCompound
-import net.minecraft.network.PacketByteBuf
 import net.minecraft.text.Text
 import net.minecraft.util.Formatting
 import net.minecraft.util.Hand
@@ -51,7 +49,7 @@ class ContractPaper(settings: Settings): Item(settings) {
 
     }
 
-    fun onSecondSign(player: PlayerEntity) {
+    fun onFinalSign(player: PlayerEntity) {
         val nbtToCopy = player.getStackInHand(Hand.MAIN_HAND).orCreateNbt.apply { putString("signee", player.entityName) }
         val newStack = ItemStack(ModItems.SIGNED_CONTRACT_PAPER).apply { setNbt(nbtToCopy.copy()) }
         player.setStackInHand(

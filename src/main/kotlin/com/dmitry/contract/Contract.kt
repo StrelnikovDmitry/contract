@@ -3,7 +3,6 @@ package com.dmitry.contract
 import net.fabricmc.api.ModInitializer
 import com.dmitry.contract.items.ContractPaper
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
-import net.minecraft.item.ItemStack
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import org.slf4j.LoggerFactory
@@ -35,7 +34,7 @@ object Contract : ModInitializer {
 			val itemInstance = stack.item as ContractPaper
 
 			server.execute {
-				if (isSecond) { itemInstance.onSecondSign(player) }
+				if (isSecond) { itemInstance.onFinalSign(player) }
 				else {itemInstance.onSign(player)}
 			}
 		}

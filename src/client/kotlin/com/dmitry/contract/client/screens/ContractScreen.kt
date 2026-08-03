@@ -45,8 +45,8 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
         return (contractItem.item == ModItems.CONTRACT_PAPER)
     }
 
-    fun isFocusable(): Boolean {
-        return (contractItem.item != ModItems.SIGNED_CONTRACT_PAPER)
+    fun isLocked(): Boolean {
+        return (contractItem.item == ModItems.SIGNED_CONTRACT_PAPER)
     }
 
     fun addLine(line: Pair<TextFieldWidget, ContractCheckbox>?) {
@@ -249,7 +249,7 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
                     line?.second?.onPress()
                 }
 
-                if(!isFocusable()) {
+                if(isLocked()) {
                     line?.second?.active = false
                 }
             }
@@ -304,7 +304,7 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
     //save lines to nbt
     fun save() {
         //if there could have been any changes
-        if (isFocusable()) {
+        if (!isLocked()) {
             //if there is something to save
             if (lines.size > 0) {
 
@@ -353,7 +353,7 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
                     line?.second?.onPress()
                 }
 
-                if(!isFocusable()) {
+                if(isLocked()) {
                     for (line in lines) {
                         line.second.active = false
                     }
@@ -373,7 +373,7 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
             }
             super.init()
             redrawLines()
-            if (isFocusable()) {
+            if (!isLocked()) {
                 signButton = drawSignButton()
                 addDrawableChild(signButton)
                 doneButton = drawDoneButton()
