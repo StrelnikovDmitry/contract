@@ -248,6 +248,10 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
                 if (tempLines[i-x].second) {
                     line?.second?.onPress()
                 }
+
+                if(!isFocusable()) {
+                    line?.second?.active = false
+                }
             }
             //setting right focus
             setFocused(lines[index].first)
@@ -347,6 +351,12 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
                 //checking if the line was checked previously
                 if (tempLines[i].second) {
                     line?.second?.onPress()
+                }
+
+                if(!isFocusable()) {
+                    for (line in lines) {
+                        line.second.active = false
+                    }
                 }
             }
 
