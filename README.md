@@ -14,7 +14,7 @@
 * 🛠️ **[     DONE     ] Interactive Checkboxes** — Create toggleable checklist items directly inside documents.
 * 📝 **[ PARTLY DONE ] Dynamic Lists** — Bullet points, numbered lists, and auto-indenting text blocks.
 * 🎨 **[IN DEVELOPMENT] Rich Text Formatting** — Advanced styling tools including colors, bold/italic/strikethrough toggles, and alignment options.
-* 📜 **[ PARTLY DONE ] Contract Signing & Binding** — Formalize agreements between players with immutable signatures and timestamps.
+* 📜 **[     DONE     ] Contract Signing & Binding** — Formalize agreements between players with immutable signatures.
 * ⚡ **[IN DEVELOPMENT] Lightweight & Vanilla-Friendly** — Minimal overhead, seamless integration into standard gameplay without bloat.
 
 ---
