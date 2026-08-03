@@ -7,6 +7,7 @@ import com.dmitry.contract.client.screens.ContractScreen
 import net.minecraft.client.MinecraftClient
 import net.minecraft.item.ItemStack
 
+@Suppress("UNUSED")
 object ContractClient : ClientModInitializer {
 	override fun onInitializeClient() {
 		// This entrypoint is suitable for setting up client-specific logic, such as rendering.
