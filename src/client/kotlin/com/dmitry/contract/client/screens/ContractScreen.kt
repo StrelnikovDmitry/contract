@@ -96,7 +96,7 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
         //removing line or the last letter by pressing backspace
         else if (keyCode == GLFW.GLFW_KEY_BACKSPACE) {
             if (isEditable()) {
-                if (!lines.isEmpty()) {
+                if (lines.isNotEmpty()) {
                     val pair = lines[index]
 
                     //if there is none focused
@@ -206,12 +206,12 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
             }
 
             //building a button
-            val x_button: Int = (width - textureWidth) / 2 + 16
-            val y_button: Int = y + 2
+            val xButton: Int = (width - textureWidth) / 2 + 16
+            val yButton: Int = y + 2
 
             val checkBox = ContractCheckbox(
-                x_button,
-                y_button,
+                xButton,
+                yButton,
                 buttonTextureSide,
                 buttonTextureCheck,
                 buttonTextureCross,
@@ -260,8 +260,8 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
 
     fun drawDoneButton(x: Int = ((((width - textureWidth) / 2) - 24) + 98) + 4 ,
                        y: Int = 17 + textureHeight,
-                       x_size: Int = 98,
-                       y_size: Int = 21): ButtonWidget {
+                       xSize: Int = 98,
+                       ySize: Int = 21): ButtonWidget {
 
         return ButtonWidget.Builder(
             Text.translatable("done_button")
@@ -269,14 +269,14 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
             save()
             close()
         }
-            .dimensions(x, y, x_size, y_size)
+            .dimensions(x, y, xSize, ySize)
             .build()
     }
 
     fun drawSignButton(x: Int = ((width-textureWidth)/2)-24,
                        y: Int = 17 + textureHeight,
-                       x_size: Int = 98,
-                       y_size: Int = 21): ButtonWidget {
+                       xSize: Int = 98,
+                       ySize: Int = 21): ButtonWidget {
 
         return ButtonWidget.Builder(
             Text.translatable("sign_button")
@@ -284,7 +284,7 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
             sign()
             close()
         }
-            .dimensions(x, y, x_size, y_size)
+            .dimensions(x, y, xSize, ySize)
             .build()
     }
 
@@ -330,13 +330,10 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
     fun loadAsList(): MutableList<Pair<String, Boolean>> {
         val tempLines: MutableList<Pair<String, Boolean>> = mutableListOf()
         if (contractItem.hasNbt()) {
-            var sizeOfNbt = contractItem.nbt!!.keys.size / 2
-            if (!isFocusable()) {sizeOfNbt = (contractItem.nbt!!.keys.size - 2) / 2}
-            else if (!isEditable()) {sizeOfNbt = (contractItem.nbt!!.keys.size - 1) / 2}
+            val sizeOfNbt = contractItem.nbt!!.keys.filter { "line" in it }.size
             for (i in 0 .. sizeOfNbt-1) {
                 val line = contractItem.nbt!!.getString("line$i")
                 val check = contractItem.nbt!!.getBoolean("check$i")
-
                 tempLines.add(Pair(line, check))
             }
         }
@@ -382,7 +379,7 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
                 doneButton = drawDoneButton()
                 addDrawableChild(doneButton)
             } else {
-                doneButton = drawDoneButton(x = ((width-textureWidth) / 2) - 24, x_size = 200)
+                doneButton = drawDoneButton(x = ((width-textureWidth) / 2) - 24, xSize = 200)
                 addDrawableChild(doneButton)
             }
         }
@@ -397,7 +394,7 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
             val x: Int = (width - textureWidth) / 2
 
             //the game multiplies coordinates and texture sizes by gui scale, 3 is the default option in vanilla book.
-            val y: Int = 3
+            val y = 3
 
             for (j in lines)
                 j.first.render(context, mouseX, mouseY, delta)
