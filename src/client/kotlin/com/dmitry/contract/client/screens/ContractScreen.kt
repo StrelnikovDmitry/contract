@@ -324,7 +324,8 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
         val tempLines: MutableList<Pair<String, Boolean>> = mutableListOf()
         if (contractItem.hasNbt()) {
             var sizeOfNbt = contractItem.nbt!!.keys.size / 2
-            if (!isEditable()) {sizeOfNbt = (contractItem.nbt!!.keys.size - 1) / 2}
+            if (!isFocusable()) {sizeOfNbt = (contractItem.nbt!!.keys.size - 2) / 2}
+            else if (!isEditable()) {sizeOfNbt = (contractItem.nbt!!.keys.size - 1) / 2}
             for (i in 0 .. sizeOfNbt-1) {
                 val line = contractItem.nbt!!.getString("line$i")
                 val check = contractItem.nbt!!.getBoolean("check$i")
