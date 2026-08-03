@@ -30,12 +30,13 @@ object Contract : ModInitializer {
 
 		//signing
 		ServerPlayNetworking.registerGlobalReceiver(ModNetworking.SIGN_PACKET) {server, player, handler, buf, responseSender ->
-			val isSigned = buf.readBoolean()
+			val isSecond = buf.readBoolean()
 			val stack = player.getStackInHand(Hand.MAIN_HAND)
 			val itemInstance = stack.item as ContractPaper
 
 			server.execute {
-				if (isSigned) { itemInstance.onSign(player) }
+				if (isSecond) { itemInstance.onSecondSign(player) }
+				else {itemInstance.onSign(player)}
 			}
 		}
 

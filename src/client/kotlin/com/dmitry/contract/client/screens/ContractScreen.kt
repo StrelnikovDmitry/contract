@@ -45,6 +45,10 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
         return (contractItem.item == ModItems.CONTRACT_PAPER)
     }
 
+    fun isFocusable(): Boolean {
+        return (contractItem.item != ModItems.SIGNED_CONTRACT_PAPER)
+    }
+
     fun addLine(line: Pair<TextFieldWidget, ContractCheckbox>?) {
         if (line != null) {
 
@@ -287,7 +291,7 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
 
         //creating packet
         val packet = PacketByteBufs.create()
-        packet.writeBoolean(true)
+        packet.writeBoolean(!isEditable())
 
         //sending packet
         ClientPlayNetworking.send(ModNetworking.SIGN_PACKET, packet)
