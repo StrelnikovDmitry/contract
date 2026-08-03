@@ -258,9 +258,9 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
         }
     }
 
-    fun drawDoneButton(x: Int = ((((width - textureWidth) / 2) - 24) + 98) + 4,
+    fun drawDoneButton(x: Int = if (isFocusable()) { ((((width - textureWidth) / 2) - 24) + 98) + 4 } else {((width - textureWidth) / 2) - 24 },
                        y: Int = 17 + textureHeight,
-                       x_size: Int = 98,
+                       x_size: Int = if (isFocusable()) { 98 } else { 200 },
                        y_size: Int = 21): ButtonWidget {
 
         return ButtonWidget.Builder(
@@ -378,8 +378,10 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
             redrawLines()
             doneButton = drawDoneButton()
             addDrawableChild(doneButton)
-            signButton = drawSignButton()
-            addDrawableChild(signButton)
+            if (isFocusable()) {
+                signButton = drawSignButton()
+                addDrawableChild(signButton)
+            }
         }
 
         //rendering screen
