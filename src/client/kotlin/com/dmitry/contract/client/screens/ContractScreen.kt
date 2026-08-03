@@ -173,10 +173,16 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
         }
     }
 
+    //on mouse click
     override fun mouseClicked(x: Double, y: Double, button: Int): Boolean {
+        //clicking
         val res = super.mouseClicked(x, y, button)
+
+        //if focuse changed
         if (focused is TextFieldWidget) {
+            //find needed pair
             val currentFocus = lines.find { it.first == focused }
+            //changing index
             index = lines.indexOf(currentFocus)
         }
         return res
@@ -258,6 +264,7 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
         }
     }
 
+    //draw button Done
     fun drawDoneButton(x: Int = ((((width - textureWidth) / 2) - 24) + 98) + 4 ,
                        y: Int = 17 + textureHeight,
                        xSize: Int = 98,
@@ -273,6 +280,7 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
             .build()
     }
 
+    //draw button Sign
     fun drawSignButton(x: Int = ((width-textureWidth)/2)-24,
                        y: Int = 17 + textureHeight,
                        xSize: Int = 98,
@@ -329,9 +337,12 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
     //load lines from nbt and pack it into list
     fun loadAsList(): MutableList<Pair<String, Boolean>> {
         val tempLines: MutableList<Pair<String, Boolean>> = mutableListOf()
+        //if there are nbt on item
         if (contractItem.hasNbt()) {
+            //getting amount of pairs
             val sizeOfNbt = contractItem.nbt!!.keys.filter { "line" in it }.size
             for (i in 0 .. sizeOfNbt-1) {
+                //getting and adding string and check
                 val line = contractItem.nbt!!.getString("line$i")
                 val check = contractItem.nbt!!.getBoolean("check$i")
                 tempLines.add(Pair(line, check))
@@ -353,6 +364,7 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
                     line?.second?.onPress()
                 }
 
+                //setting checkboxes passive if item is finished contract paper
                 if(isLocked()) {
                     for (line in lines) {
                         line.second.active = false
