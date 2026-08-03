@@ -304,7 +304,7 @@ class ContractScreen(var contractItem: ItemStack) : Screen(Text.translatable("co
     //save lines to nbt
     fun save() {
         //if there could have been any changes
-        if (!isFocusable()) {
+        if (isFocusable()) {
             //if there is something to save
             if (lines.size > 0) {
 
