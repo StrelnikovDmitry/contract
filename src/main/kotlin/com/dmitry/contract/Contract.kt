@@ -7,6 +7,7 @@ import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import org.slf4j.LoggerFactory
 
+@Suppress("UNUSED")
 object Contract : ModInitializer {
 	const val MOD_ID: String = "contract"
 
@@ -28,7 +29,7 @@ object Contract : ModInitializer {
 		LOGGER.info("Creative tab was initialised successfully.")
 
 		//signing
-		ServerPlayNetworking.registerGlobalReceiver(ModNetworking.SIGN_PACKET) {server, player, handler, buf, responseSender ->
+		ServerPlayNetworking.registerGlobalReceiver(ModNetworking.SIGN_PACKET) {server, player, _, buf, _ ->
 			val isSecond = buf.readBoolean()
 			val stack = player.getStackInHand(Hand.MAIN_HAND)
 			val itemInstance = stack.item as ContractPaper
@@ -40,7 +41,7 @@ object Contract : ModInitializer {
 		}
 
 		//saving
-		ServerPlayNetworking.registerGlobalReceiver(ModNetworking.NBT_PACKET) {server, player, handler, buf, responseSender ->
+		ServerPlayNetworking.registerGlobalReceiver(ModNetworking.NBT_PACKET) {server, player, _, buf, _ ->
 			val stack = player.getStackInHand(Hand.MAIN_HAND)
 			val itemInstance = stack.item as ContractPaper
 
