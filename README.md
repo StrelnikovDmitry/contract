@@ -4,11 +4,6 @@
 
 ---
 
-> ⚠️ **Project Status: Early Development**
-> Currently, only core object initializations are complete. All features listed below are actively **IN DEVELOPMENT** (WIP) and subject to change.
-
----
-
 ## 🌟 Planned Features
 
 * 🛠️ **[     DONE     ] Interactive Checkboxes** — Create toggleable checklist items directly inside documents.
@@ -59,9 +54,6 @@ After crafting the contract right click it and open gui. To create a line with c
 ---
 
 ## 🤝 Contributing & Support
-
-As this project is in active early development, feedback, suggestions, and contributions are welcome!
-
 * **Issues / Feature Requests:** Please open an issue on GitHub.
 * **Pull Requests:** Feel free to submit PRs for features marked as *In Development*.
 
